@@ -7,33 +7,55 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
     />
-    <title>GameGuidez</title>
+    <title>Kozachok</title>
   </head>
   <body class="grey lighten-3">
     <!-- NAVBAR -->
     <nav class="z-depth-0 grey lighten-4">
       <div class="nav-wrapper container">
         <a href="#" class="brand-logo">
-          <img src="img/logo.svg" style="width: 180px; margin-top: 10px" />
+          <img src="logo.jpg" style="width: 180px; margin-top: 10px" />
         </a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
           <li class="logged-in" style="display: none">
-            <a href="#" class="grey-text modal-trigger" data-target="modal-account">Account</a>
+            <a
+              href="#"
+              class="grey-text modal-trigger"
+              data-target="modal-account"
+              >Account</a
+            >
           </li>
           <li class="logged-in" style="display: none">
             <a href="#" class="grey-text" id="logout">Logout</a>
           </li>
           <li class="logged-in" style="display: none">
-            <a href="#" class="grey-text modal-trigger" data-target="modal-create">Create Guide</a>
+            <a
+              href="#"
+              class="grey-text modal-trigger"
+              data-target="modal-create"
+              >Create Guide</a
+            >
           </li>
           <li class="logged-out" style="display: block">
-            <a href="#" class="grey-text modal-trigger" data-target="modal-login">Login</a>
+            <a
+              href="#"
+              class="grey-text modal-trigger"
+              data-target="modal-login"
+              >Login</a
+            >
           </li>
           <li class="logged-out" style="display: block">
-            <a href="#" class="grey-text modal-trigger" data-target="modal-signup">Sign up</a>
+            <a
+              href="#"
+              class="grey-text modal-trigger"
+              data-target="modal-signup"
+              >Sign up</a
+            >
           </li>
           <li class="logged-out" style="display: block">
-            <a href="#" class="grey-text" id="google-login">Login with Google</a>
+            <a href="#" class="grey-text" id="google-login"
+              >Login with Google</a
+            >
           </li>
         </ul>
       </div>
@@ -97,7 +119,11 @@
             <label for="title">Guide Title</label>
           </div>
           <div class="input-field">
-            <textarea id="content" class="materialize-textarea" required></textarea>
+            <textarea
+              id="content"
+              class="materialize-textarea"
+              required
+            ></textarea>
             <label for="content">Guide Content</label>
           </div>
           <button class="btn yellow darken-2 z-depth-0">Create</button>
@@ -110,7 +136,9 @@
       <ul class="collapsible z-depth-0 guides" style="border: none">
         <li>
           <div class="collapsible-header grey lighten-4">Guide title</div>
-          <div class="collapsible-body white">Lorem ipsum dolor sit amet01.</div>
+          <div class="collapsible-body white">
+            Lorem ipsum dolor sit amet01.
+          </div>
         </li>
         <li>
           <div class="collapsible-header grey lighten-4">Guide title</div>
@@ -133,136 +161,9 @@
       </ul>
     </div>
 
-    <!-- Firebase Initialization -->
-    <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-      import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-analytics.js";
-      import {
-        getAuth,
-        createUserWithEmailAndPassword,
-        signInWithEmailAndPassword,
-        signOut,
-        onAuthStateChanged,
-        sendEmailVerification,
-        GoogleAuthProvider,
-        signInWithPopup,
-      } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
-
-      // Firebase config
-      const firebaseConfig = {
-        apiKey: "AIzaSyCZyaBSgjF2EQ6Q1JZKRUKVtIYtJFAWoBo",
-        authDomain: "kozachok-1cbb6.firebaseapp.com",
-        databaseURL: "https://kozachok-1cbb6-default-rtdb.europe-west1.firebasedatabase.app",
-        projectId: "kozachok-1cbb6",
-        storageBucket: "kozachok-1cbb6.firebasestorage.app",
-        messagingSenderId: "703368002295",
-        appId: "1:703368002295:web:17485220a0188e7e9df1f2",
-        measurementId: "G-252EVW7DL8",
-      };
-
-      // Initialize Firebase
-      const app = initializeApp(firebaseConfig);
-      const analytics = getAnalytics(app);
-      const auth = getAuth();
-
-      // Google login
-      document.getElementById("google-login").addEventListener("click", (e) => {
-        e.preventDefault();
-        const provider = new GoogleAuthProvider();
-        signInWithPopup(auth, provider)
-          .then((result) => {
-            console.log("Google user logged in:", result.user);
-            const modal = document.getElementById("modal-login");
-            M.Modal.getInstance(modal).close();
-          })
-          .catch((error) => {
-            console.error("Error logging in with Google:", error.message);
-            alert(error.message);
-          });
-      });
-
-      // Register new user
-      document.getElementById("signup-form").addEventListener("submit", (e) => {
-        e.preventDefault();
-        const email = document.getElementById("signup-email").value;
-        const password = document.getElementById("signup-password").value;
-
-        createUserWithEmailAndPassword(auth, email, password)
-          .then((userCredential) => {
-            console.log("User signed up:", userCredential.user);
-
-            // Send email verification
-            const user = userCredential.user;
-            sendEmailVerification(user)
-              .then(() => {
-                console.log("Verification email sent!");
-                // You can also display a message to the user to inform them to check their email
-                alert("Please check your email to verify your account.");
-              })
-              .catch((error) => {
-                console.error("Error sending email verification:", error);
-                alert(error.message);
-              });
-
-            const modal = document.getElementById("modal-signup");
-            M.Modal.getInstance(modal).close();
-            document.getElementById("signup-form").reset();
-          })
-          .catch((error) => {
-            console.error("Error signing up:", error.message);
-            alert(error.message);
-          });
-      });
-
-      // Login existing user
-      document.getElementById("login-form").addEventListener("submit", (e) => {
-        e.preventDefault();
-        const email = document.getElementById("login-email").value;
-        const password = document.getElementById("login-password").value;
-
-        signInWithEmailAndPassword(auth, email, password)
-          .then((userCredential) => {
-            console.log("User logged in:", userCredential.user);
-            const modal = document.getElementById("modal-login");
-            M.Modal.getInstance(modal).close();
-          })
-          .catch((error) => {
-            console.error("Error logging in:", error.message);
-            alert(error.message);
-          });
-      });
-
-      // Log out
-      document.getElementById("logout").addEventListener("click", () => {
-        signOut(auth)
-          .then(() => {
-            console.log("User logged out");
-          })
-          .catch((error) => {
-            console.error("Error logging out:", error.message);
-          });
-      });
-
-      // Update UI based on auth state
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          document.querySelectorAll(".logged-in").forEach((item) => (item.style.display = "block"));
-          document.querySelectorAll(".logged-out").forEach((item) => (item.style.display = "none"));
-        } else {
-          document.querySelectorAll(".logged-in").forEach((item) => (item.style.display = "none"));
-          document
-            .querySelectorAll(".logged-out")
-            .forEach((item) => (item.style.display = "block"));
-        }
-      });
-
-      // Initialize modals
-      document.addEventListener("DOMContentLoaded", function () {
-        const modals = document.querySelectorAll(".modal");
-        M.Modal.init(modals);
-      });
-    </script>
-
+    <!-- Подключение скриптов -->
+    <script src="app.js" type="module"></script>
+    <script src="index.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   </body>
 </html>
