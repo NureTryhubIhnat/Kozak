@@ -55,7 +55,7 @@ document.getElementById("signup-form").addEventListener("submit", (e) => {
     .then((userCredential) => {
       console.log("User signed up:", userCredential.user);
 
-      // Send email verification
+      // Отправка email-подтверждения
       const user = userCredential.user;
       sendEmailVerification(user)
         .then(() => {
@@ -66,11 +66,11 @@ document.getElementById("signup-form").addEventListener("submit", (e) => {
           console.error("Error sending email verification:", error);
           alert(error.message);
         });
-
       const modal = document.getElementById("modal-signup");
       M.Modal.getInstance(modal).close();
       document.getElementById("signup-form").reset();
     })
+
     .catch((error) => {
       console.error("Error signing up:", error.message);
       alert(error.message);
@@ -106,26 +106,36 @@ document.getElementById("logout").addEventListener("click", () => {
     });
 });
 
-// Update UI based on auth state
+// Обновление UI и показ информации о пользователе в модальном окне
 onAuthStateChanged(auth, (user) => {
   if (user) {
+    // Показываем элементы для авторизованных пользователей
     document
       .querySelectorAll(".logged-in")
       .forEach((item) => (item.style.display = "block"));
     document
       .querySelectorAll(".logged-out")
       .forEach((item) => (item.style.display = "none"));
+
+    // Получаем email пользователя и отображаем его в модальном окне
+    const accountDetails = document.querySelector(".account-details");
+    accountDetails.innerHTML = `<p>Email: ${user.email}</p>`;
+    // accountDetails.innerHTML = `<p>Password: ${user.password}</p>`;
   } else {
+    // Если пользователь не авторизован, скрываем элементы для авторизованных пользователей
     document
       .querySelectorAll(".logged-in")
       .forEach((item) => (item.style.display = "none"));
     document
       .querySelectorAll(".logged-out")
       .forEach((item) => (item.style.display = "block"));
+
+    // Очищаем данные аккаунта
+    document.querySelector(".account-details").innerHTML = "";
   }
 });
 
-// Initialize modals
+// Initialize modals открытие закрытие
 document.addEventListener("DOMContentLoaded", function () {
   const modals = document.querySelectorAll(".modal");
   M.Modal.init(modals);
