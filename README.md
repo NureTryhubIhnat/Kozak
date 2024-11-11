@@ -19,8 +19,8 @@ A basic user registration form utilizing Firebase Authentication. Allows users t
 │   └── register.js              # Handles user registration logic
 │
 ├── index.html                   # Main HTML file with the registration form
-├── package.json                 # Node.js dependencies and project metadata
-└── package-lock.json            # Lock file for Node.js dependencies
+├── package.json                 # Dependencies and project metadata
+└── package-lock.json            # Lock file 
 ```
 
 ## Requirements
