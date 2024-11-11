@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-analytics.js";
+
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -11,22 +11,13 @@ import {
   signInWithPopup,
 } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
-// Firebase config
-const firebaseConfig = {
-  apiKey: "AIzaSyCZyaBSgjF2EQ6Q1JZKRUKVtIYtJFAWoBo",
-  authDomain: "kozachok-1cbb6.firebaseapp.com",
-  databaseURL:
-    "https://kozachok-1cbb6-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "kozachok-1cbb6",
-  storageBucket: "kozachok-1cbb6.firebasestorage.app",
-  messagingSenderId: "703368002295",
-  appId: "1:703368002295:web:17485220a0188e7e9df1f2",
-  measurementId: "G-252EVW7DL8",
-};
+// Импортируем конфигурацию Firebase
+import firebaseConfig from "./firebase-config.js";
+// Экспортируем auth для использования в других файлах
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+
 const auth = getAuth();
 
 // Google login
@@ -41,38 +32,6 @@ document.getElementById("google-login").addEventListener("click", (e) => {
     })
     .catch((error) => {
       console.error("Error logging in with Google:", error.message);
-      alert(error.message);
-    });
-});
-
-// Register new user
-document.getElementById("signup-form").addEventListener("submit", (e) => {
-  e.preventDefault();
-  const email = document.getElementById("signup-email").value;
-  const password = document.getElementById("signup-password").value;
-
-  createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      console.log("User signed up:", userCredential.user);
-
-      // Отправка email-подтверждения
-      const user = userCredential.user;
-      sendEmailVerification(user)
-        .then(() => {
-          console.log("Verification email sent!");
-          alert("Please check your email to verify your account.");
-        })
-        .catch((error) => {
-          console.error("Error sending email verification:", error);
-          alert(error.message);
-        });
-      const modal = document.getElementById("modal-signup");
-      M.Modal.getInstance(modal).close();
-      document.getElementById("signup-form").reset();
-    })
-
-    .catch((error) => {
-      console.error("Error signing up:", error.message);
       alert(error.message);
     });
 });
@@ -110,12 +69,8 @@ document.getElementById("logout").addEventListener("click", () => {
 onAuthStateChanged(auth, (user) => {
   if (user) {
     // Показываем элементы для авторизованных пользователей
-    document
-      .querySelectorAll(".logged-in")
-      .forEach((item) => (item.style.display = "block"));
-    document
-      .querySelectorAll(".logged-out")
-      .forEach((item) => (item.style.display = "none"));
+    document.querySelectorAll(".logged-in").forEach((item) => (item.style.display = "block"));
+    document.querySelectorAll(".logged-out").forEach((item) => (item.style.display = "none"));
 
     // Получаем email пользователя и отображаем его в модальном окне
     const accountDetails = document.querySelector(".account-details");
@@ -123,12 +78,8 @@ onAuthStateChanged(auth, (user) => {
     // accountDetails.innerHTML = `<p>Password: ${user.password}</p>`;
   } else {
     // Если пользователь не авторизован, скрываем элементы для авторизованных пользователей
-    document
-      .querySelectorAll(".logged-in")
-      .forEach((item) => (item.style.display = "none"));
-    document
-      .querySelectorAll(".logged-out")
-      .forEach((item) => (item.style.display = "block"));
+    document.querySelectorAll(".logged-in").forEach((item) => (item.style.display = "none"));
+    document.querySelectorAll(".logged-out").forEach((item) => (item.style.display = "block"));
 
     // Очищаем данные аккаунта
     document.querySelector(".account-details").innerHTML = "";
@@ -140,3 +91,11 @@ document.addEventListener("DOMContentLoaded", function () {
   const modals = document.querySelectorAll(".modal");
   M.Modal.init(modals);
 });
+
+export {
+  auth,
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  GoogleAuthProvider,
+  signInWithPopup,
+};
