@@ -24,6 +24,15 @@ label.btn {
   color: #26b4ff;
 }
 
+button.btn.btn-delete {
+  border-color: #ff2626;
+  background: transparent;
+  color: #ff2626;
+}
+.btn-delete:hover {
+  background: #ff2626 !important;
+  color: #fff !important; /* Это сделает текст белым, чтобы он был виден на красном фоне */
+}
 .btn {
   cursor: pointer;
 }

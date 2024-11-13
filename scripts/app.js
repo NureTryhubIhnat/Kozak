@@ -44,6 +44,16 @@ document.getElementById("login-form").addEventListener("submit", (e) => {
       alert(error.message);
     });
 });
+//
+const passwordEye = document.getElementById("password-eye");
+
+passwordEye.addEventListener("click", function () {
+  const password = document.getElementById("login-password");
+  const isPasswordVisible = password.type === "text";
+
+  password.type = isPasswordVisible ? "password" : "text";
+  passwordEye.src = isPasswordVisible ? "images/eye-close.png" : "images/eye-open.png";
+});
 
 // Log out
 document.getElementById("logout").addEventListener("click", () => {

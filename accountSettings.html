@@ -59,14 +59,17 @@
                   <div class="form-group">
                     <label class="form-label">E-mail</label>
                     <input type="text" class="form-control mb-1" value="" />
-                    <div class="alert alert-warning mt-3">
+                    <div class="alert alert-warning mt-3 helper-text" id="email-confirmation-message" style="display: none">
                       Your email is not confirmed. Please check your inbox.<br />
-                      <a href="javascript:void(0)">Resend confirmation</a>
+                      <a href="javascript:void(0)" id="confirmation-link">Resend confirmation</a>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="form-label">Company</label>
                     <input type="text" class="form-control" value="" />
+                  </div>
+                  <div class="form-group">
+                    <button class="btn btn-delete" id="delete-button">Delete account</button>
                   </div>
                 </div>
               </div>
@@ -74,15 +77,16 @@
                 <div class="card-body pb-2">
                   <div class="form-group">
                     <label class="form-label">Current password</label>
-                    <input type="password" class="form-control" />
+                    <input type="password" class="form-control" id="current-password" value="" />
                   </div>
                   <div class="form-group">
                     <label class="form-label">New password</label>
-                    <input type="password" class="form-control" />
+                    <input type="password" class="form-control" id="new-password" />
                   </div>
                   <div class="form-group">
                     <label class="form-label">Repeat new password</label>
-                    <input type="password" class="form-control" />
+                    <input type="password" class="form-control" id="repeat-new-password" />
+                    <span id="password-error" class="helper-text" style="color: red; display: none">Passwords don't match</span>
                   </div>
                 </div>
               </div>
@@ -240,11 +244,13 @@
         </div>
       </div>
       <div class="text-right mt-3">
-        <button type="button" class="btn btn-primary">Save changes</button>&nbsp;
-        <button type="button" class="btn btn-default">Cancel</button>
+        <button type="button" class="btn btn-primary" id="save-changes-button">Save changes</button>&nbsp;
+        <button type="button" class="btn btn-default" id="cancel-button">Cancel</button>
       </div>
     </div>
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script type="module" src="scripts/change-password.js"></script>
+    <script type="module" src="scripts/firebase-config.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript"></script>

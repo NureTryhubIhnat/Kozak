@@ -72,3 +72,5 @@ document.getElementById("signup-form").addEventListener("submit", (e) => {
       alert(error.message);
     });
 });
+
+export { registerValid };
