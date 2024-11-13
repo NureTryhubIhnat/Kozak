@@ -1,11 +1,5 @@
 // Register new user
-import {
-  auth,
-  createUserWithEmailAndPassword,
-  sendEmailVerification,
-  GoogleAuthProvider,
-  signInWithPopup,
-} from "./app.js";
+import { auth, createUserWithEmailAndPassword, sendEmailVerification, GoogleAuthProvider, signInWithPopup } from "./app.js";
 
 function registerValid(password) {
   // Проверки на различные условия

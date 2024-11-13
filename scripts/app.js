@@ -1,15 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
 
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signOut,
-  onAuthStateChanged,
-  sendEmailVerification,
-  GoogleAuthProvider,
-  signInWithPopup,
-} from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+import { sendPasswordResetEmail, getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendEmailVerification, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
 // Импортируем конфигурацию Firebase
 import firebaseConfig from "./firebase-config.js";
@@ -92,10 +83,21 @@ document.addEventListener("DOMContentLoaded", function () {
   M.Modal.init(modals);
 });
 
-export {
-  auth,
-  createUserWithEmailAndPassword,
-  sendEmailVerification,
-  GoogleAuthProvider,
-  signInWithPopup,
-};
+//reset
+
+const reset = document.getElementById("reset-password");
+reset.addEventListener("click", function (event) {
+  event.preventDefault();
+  const email = document.getElementById("login-email").value;
+  sendPasswordResetEmail(auth, email)
+    .then(() => {
+      alert(" Password reset email sent!");
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // ..
+    });
+});
+
+export { auth, createUserWithEmailAndPassword, sendEmailVerification, GoogleAuthProvider, signInWithPopup };
