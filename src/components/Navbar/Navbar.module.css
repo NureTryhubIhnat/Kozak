@@ -1,0 +1,39 @@
+.navContainer {
+  display: flex;
+  padding: 20px;
+
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.302);
+}
+
+.logoImg {
+  width: 180px;
+}
+
+.navList {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.btnContainer {
+  display: flex;
+  gap: 20px;
+}
+
+.btn {
+  color: rgb(69, 69, 69);
+  border: 2px solid rgb(69, 69, 69);
+  border-radius: 20px;
+  outline: none;
+  transition:
+    color 0.5 ease,
+    border-color 0.5 ease;
+}
+
+.btn:hover {
+  color: rgb(253, 206, 112);
+  border-color: rgb(253, 206, 112);
+  outline: none;
+}

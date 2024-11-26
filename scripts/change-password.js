@@ -119,10 +119,7 @@ onAuthStateChanged(auth, (user) => {
     }
   });
 });
-//
 
-//
-//
 const cancelButton = document.getElementById("cancel-button");
 cancelButton.addEventListener("click", function () {
   location.reload();
