@@ -1,21 +1,72 @@
-import React from "react";
-import Modal from "react-modal";
+import { useState } from "react";
+import css from "./ModalWindow.module.css";
+import { signUpWithEmail, signInWithEmail, resetPassword } from "../../utils/registration";
 
-Modal.setAppElement("#root");
+export default function ModalWindow({ closeModal, isSignUp = false }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
-const ModalWindow = ({ isOpen, onClose, children }) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (isSignUp) {
+      if (password !== confirmPassword) {
+        alert("Passwords do not match");
+        return;
+      }
+      await signUpWithEmail(email, password);
+    } else {
+      await signInWithEmail(email, password);
+    }
+    closeModal();
+  };
+
+  const handleResetPassword = async (e) => {
+    e.preventDefault();
+    await resetPassword(email);
+  };
+
   return (
-    <Modal
-      isOpen={isOpen}
-      onRequestClose={onClose}
-      style={{
-        content: { width: "400px", height: "fit-content", margin: "auto", padding: "20px", borderRadius: 20 },
-        overlay: { backgroundColor: "rgba(0, 0, 0, 0.5)" },
-      }}
-    >
-      {children}
-    </Modal>
-  );
-};
+    <div className={css.modal}>
+      <div className={css.modalContent}>
+        <button className={css.closeButton} onClick={closeModal}>
+          &times;
+        </button>
+        <h2>{isSignUp ? "Sign Up" : "Login"}</h2>
 
-export default ModalWindow;
+        <form onSubmit={handleSubmit} className={css.form}>
+          <div className={css.formInputsWrapper}>
+            <div className={css.inputContainer}>
+              <label htmlFor="email">Email</label>
+              <input className={css.input} type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+            </div>
+
+            <div className={css.inputContainer}>
+              <label htmlFor="password">Password</label>
+              <input className={css.input} type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+            </div>
+
+            {isSignUp && (
+              <div className={css.inputContainer}>
+                <label htmlFor="confirmPassword">Confirm Password</label>
+                <input className={css.input} type="password" id="confirmPassword" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
+              </div>
+            )}
+          </div>
+          <div className={css.buttonsWrapper}>
+            <button className={css.button} type="submit">
+              {isSignUp ? "Register" : "Login"}
+            </button>
+
+            {!isSignUp && (
+              <button onClick={handleResetPassword} className={css.forgotPassword}>
+                Forgot Password?
+              </button>
+            )}
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}

@@ -1,0 +1,18 @@
+.navContainer {
+  display: flex;
+  padding: 10px 20px;
+
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.302);
+}
+
+.logoImg {
+  width: 180px;
+}
+
+.navWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}

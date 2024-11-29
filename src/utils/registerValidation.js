@@ -1,4 +1,4 @@
-export const validatePassword = (password) => {
+export default function registerValidation(password) {
   if (password.length < 8) {
     return "Password must be at least 8 characters long.";
   }
@@ -15,4 +15,4 @@ export const validatePassword = (password) => {
     return "Password must contain at least one special character.";
   }
   return true;
-};
+}

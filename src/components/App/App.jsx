@@ -1,15 +1,15 @@
 import React from "react";
-// import Navbar from "../Navbar/Navbar";
-// import SignupModal from "../Modals/SignupModal/SignupModal";
-import AuthPage from "../../pages/AuthPage/AuthPage";
+import { Route, Routes } from "react-router-dom";
+import Layout from "../Layout/Layout";
+import HomePage from "../../pages/HomePage/HomePage";
 
 function App() {
   return (
-    <div className="App">
-      {/* <Navbar />
-      <SignupModal /> */}
-      <AuthPage />
-    </div>
+    <Layout>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+      </Routes>
+    </Layout>
   );
 }
 
