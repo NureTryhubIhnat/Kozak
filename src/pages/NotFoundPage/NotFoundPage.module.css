@@ -1,0 +1,13 @@
+.text {
+  text-align: center;
+  margin-top: 50px;
+  font-size: large;
+}
+
+.link {
+  color: rgb(249, 195, 86);
+}
+
+.link:hover {
+  color: rgb(250, 206, 119);
+}

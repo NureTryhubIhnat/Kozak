@@ -1,4 +1,4 @@
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, updatePassword, sendPasswordResetEmail, signOut } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, updatePassword, sendPasswordResetEmail, signOut, sendEmailVerification } from "firebase/auth";
 import firebaseApp from "./firebase/firebaseConfig";
 import { toast } from "react-hot-toast";
 
@@ -11,7 +11,11 @@ export const signUpWithEmail = async (email, password) => {
 
     await sendEmailVerification(user);
 
-    toast.success("SignUp successful! Please check your email to verify your account.");
+    toast.success("SignUp successful! Please check your email to verify your account.", {
+      style: {
+        backgroundColor: "green",
+      },
+    });
   } catch (error) {
     toast.error("Error during sign up: " + error.message);
   }
@@ -27,7 +31,11 @@ export const signInWithEmail = async (email, password) => {
       return;
     }
 
-    toast.success("Login successful!");
+    toast.success("Login successful!", {
+      style: {
+        backgroundColor: "green",
+      },
+    });
   } catch (error) {
     toast.error("Error during login: " + error.message);
   }
@@ -39,9 +47,13 @@ export const signUpWithGoogle = async () => {
   try {
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
-    console.log("Google sign-in successful:", user);
+    toast.success("Google sign-in successful:", user, {
+      style: {
+        backgroundColor: "green",
+      },
+    });
   } catch (error) {
-    console.error("Error during Google sign-in:", error.message);
+    toast.error("Error during Google sign-in:", error.message);
   }
 };
 
@@ -50,12 +62,16 @@ export const changePassword = async (newPassword) => {
   if (user) {
     try {
       await updatePassword(user, newPassword);
-      console.log("Password changed successfully");
+      toast.success("Password changed successfully", {
+        style: {
+          backgroundColor: "green",
+        },
+      });
     } catch (error) {
-      console.error("Error changing password:", error.message);
+      toast.error("Error changing password:", error.message);
     }
   } else {
-    console.log("No user logged in");
+    toast.error("No user logged in");
   }
 };
 
@@ -63,9 +79,13 @@ export const resetPassword = async (email) => {
   const auth = getAuth();
   try {
     await sendPasswordResetEmail(auth, email);
-    console.log("Password reset email sent");
+    toast.success("Password reset email sent", {
+      style: {
+        backgroundColor: "green",
+      },
+    });
   } catch (error) {
-    console.error("Error sending password reset email:", error.message);
+    toast.error("Error sending password reset email:", error.message);
   }
 };
 
@@ -73,7 +93,11 @@ export const logout = async () => {
   const auth = getAuth();
   try {
     await signOut(auth);
-    toast.success("Logged out successfully!");
+    toast.success("Logged out successfully!", {
+      style: {
+        backgroundColor: "green",
+      },
+    });
   } catch (error) {
     toast.error("Error during logout: " + error.message);
   }

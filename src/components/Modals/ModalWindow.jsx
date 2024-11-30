@@ -1,11 +1,13 @@
 import { useState } from "react";
 import css from "./ModalWindow.module.css";
 import { signUpWithEmail, signInWithEmail, resetPassword } from "../../utils/registration";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 export default function ModalWindow({ closeModal, isSignUp = false }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,6 +29,10 @@ export default function ModalWindow({ closeModal, isSignUp = false }) {
     await resetPassword(email);
   };
 
+  const togglePasswordVisibility = () => {
+    setIsPasswordVisible((prev) => !prev);
+  };
+
   return (
     <div className={css.modal}>
       <div className={css.modalContent}>
@@ -44,13 +50,30 @@ export default function ModalWindow({ closeModal, isSignUp = false }) {
 
             <div className={css.inputContainer}>
               <label htmlFor="password">Password</label>
-              <input className={css.input} type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+              <input
+                className={css.input}
+                type={isPasswordVisible ? "text" : "password"} // Меняем тип поля на текст или пароль
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <span className={css.eyeIcon} onClick={togglePasswordVisibility}>
+                {isPasswordVisible ? <FaEye /> : <FaEyeSlash />} {/* Иконка глаза */}
+              </span>
             </div>
 
             {isSignUp && (
               <div className={css.inputContainer}>
                 <label htmlFor="confirmPassword">Confirm Password</label>
-                <input className={css.input} type="password" id="confirmPassword" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
+                <input
+                  className={css.input}
+                  type={isPasswordVisible ? "text" : "password"} // Так же для подтверждения пароля
+                  id="confirmPassword"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                />
               </div>
             )}
           </div>
