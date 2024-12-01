@@ -1,13 +1,13 @@
-import { useState } from "react";
-import css from "./AuthNav.module.css";
-import ModalWindow from "../../Modals/ModalWindow";
-import { signUpWithGoogle } from "../../../utils/registration";
+import { useState } from 'react';
+import css from './AuthNav.module.css';
+import ModalWindow from '../../Modals/ModalWindow/ModalWindow';
+import { signUpWithGoogle } from '../../../utils/registration';
 
 export default function AuthNav() {
   const [isModalOpen, setModalOpen] = useState(false);
   const [isSignUp, setIsSignUp] = useState(false);
 
-  const openModal = (signUp) => {
+  const openModal = signUp => {
     setIsSignUp(signUp);
     setModalOpen(true);
   };
@@ -31,7 +31,9 @@ export default function AuthNav() {
         Sign In with Google
       </button>
 
-      {isModalOpen && <ModalWindow closeModal={closeModal} isSignUp={isSignUp} />}
+      {isModalOpen && (
+        <ModalWindow closeModal={closeModal} isSignUp={isSignUp} />
+      )}
     </div>
   );
 }

@@ -10,7 +10,8 @@
   border-radius: 20px;
   outline: none;
   padding: 5px 10px;
-  height: 40px;
+  height: 25px;
+  background-color: white;
   transition:
     color 0.5 ease,
     border-color 0.5 ease;
@@ -18,7 +19,7 @@
 
 .navLink:hover {
   color: rgb(253, 206, 112);
-  border-color: rgb(253, 206, 112);
+  border-color: #fdce70;
   outline: none;
 }
 
