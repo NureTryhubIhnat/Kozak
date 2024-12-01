@@ -1,0 +1,104 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin: 40px auto;
+  color: rgb(69, 69, 69);
+}
+
+.title {
+  font-size: 45px;
+}
+
+.titleContainer {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  gap: 20px;
+  align-items: center;
+  text-align: center;
+  width: 80%;
+}
+
+.partTitle {
+  color: rgb(253, 206, 112);
+}
+
+.advantagesContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 400px;
+  margin: 0 50px;
+}
+
+.img {
+  width: 500px;
+}
+
+.listContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.listItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+}
+
+.tick {
+  stroke: rgb(253, 206, 112);
+  font-size: 20px;
+}
+
+.downloadContainer {
+  margin: 0 50px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.btnContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.downloadTitle {
+  color: rgb(253, 206, 112);
+}
+
+.btn {
+  color: rgb(249, 195, 86);
+  border: 2px solid rgb(249, 195, 86);
+  border-radius: 20px;
+  outline: none;
+  padding: 5px 10px;
+  height: 40px;
+  transition:
+    color 0.5 ease,
+    border-color 0.5 ease;
+}
+
+.btn:hover {
+  color: rgb(255, 221, 152);
+  border-color: rgb(255, 221, 152);
+  outline: none;
+}
+
+.text {
+  font-size: 18px;
+}

@@ -1,4 +1,6 @@
 // Конфигурация Firebase
+import { initializeApp } from "firebase/app";
+
 const firebaseConfig = {
   apiKey: "AIzaSyCZyaBSgjF2EQ6Q1JZKRUKVtIYtJFAWoBo",
   authDomain: "kozachok-1cbb6.firebaseapp.com",
@@ -10,4 +12,6 @@ const firebaseConfig = {
   measurementId: "G-252EVW7DL8",
 };
 
-export default firebaseConfig;
+const firebaseApp = initializeApp(firebaseConfig);
+
+export default firebaseApp;
