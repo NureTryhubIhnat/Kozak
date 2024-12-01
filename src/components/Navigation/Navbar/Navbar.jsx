@@ -1,19 +1,18 @@
-import React, { useState, useEffect } from "react";
-import css from "./Navbar.module.css";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import firebaseApp from "../../../utils/firebase/firebaseConfig";
-import AuthNav from "../AuthNav/AuthNav";
-import UserMenu from "../UserMenu/UserMenu";
+import React, { useState, useEffect } from 'react';
+import css from './Navbar.module.css';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../../../utils/firebase/firebaseConfig';
+import AuthNav from '../AuthNav/AuthNav';
+import UserMenu from '../UserMenu/UserMenu';
 
 const Navbar = () => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const auth = getAuth(firebaseApp);
     const currentUser = auth.currentUser;
     setUser(currentUser);
 
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, currentUser => {
       setUser(currentUser);
     });
 
