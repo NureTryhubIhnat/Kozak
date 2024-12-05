@@ -1,40 +1,62 @@
 import React, { useState, useEffect } from 'react';
 import css from './General.module.css';
-import { getAuth, sendEmailVerification } from 'firebase/auth';
+import { resendVerification } from '../../../utils/registration';
+import { auth } from '../../../utils/firebase/firebaseConfig';
 import { toast } from 'react-hot-toast';
 import DeleteAccModal from '../../Modals/DeleteAccModal/DeleteAccModal';
+import {
+  fetchUserSettings,
+  saveUserSettings,
+} from '../../../utils/userSettingsService.js';
 
 export default function General() {
   const [emailVerified, setEmailVerified] = useState(true);
   const [email, setEmail] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => {
-    const auth = getAuth();
-    const user = auth.currentUser;
+  const [userSettings, setUserSettings] = useState({
+    username: '',
+    name: '',
+    company: '',
+  });
 
-    if (user) {
-      setEmail(user.email || '');
-      setEmailVerified(user.emailVerified);
-    }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const user = auth.currentUser;
+
+        if (user) {
+          setEmail(user.email || '');
+          setEmailVerified(user.emailVerified);
+
+          const settings = await fetchUserSettings();
+          setUserSettings(settings);
+        }
+      } catch (error) {
+        toast.error(error.message);
+      }
+    };
+
+    fetchData();
   }, []);
 
-  const handleResendVerification = async () => {
-    const auth = getAuth();
-    const user = auth.currentUser;
-
-    if (user) {
-      try {
-        await sendEmailVerification(user);
-        toast.success('Verification email sent successfully.', {
-          style: { backgroundColor: 'green' },
-        });
-      } catch (error) {
-        toast.error('Error sending verification email: ' + error.message);
-      }
-    } else {
-      toast.error('No user logged in.');
+  const handleSave = async () => {
+    try {
+      await saveUserSettings(userSettings);
+      toast.success('Settings saved successfully.', {
+        style: { backgroundColor: 'green' },
+      });
+    } catch (error) {
+      toast.error('Error saving settings: ' + error.message);
     }
+  };
+
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setUserSettings(prevSettings => ({
+      ...prevSettings,
+      [name]: value,
+    }));
   };
 
   return (
@@ -45,11 +67,23 @@ export default function General() {
           <ul className={css.list}>
             <li className={css.listitem}>
               <label>Username</label>
-              <input type="text" value="" className={css.input} />
+              <input
+                type="text"
+                name="username"
+                value={userSettings.username}
+                onChange={handleChange}
+                className={css.input}
+              />
             </li>
             <li className={css.listitem}>
               <label>Name</label>
-              <input type="text" value="" className={css.input} />
+              <input
+                type="text"
+                name="name"
+                value={userSettings.name}
+                onChange={handleChange}
+                className={css.input}
+              />
             </li>
             <li className={css.listitem}>
               <label>E-mail</label>
@@ -59,10 +93,7 @@ export default function General() {
                   <p className={css.errorMessage}>
                     Your email is not verified.
                   </p>
-                  <a
-                    className={css.resendLink}
-                    onClick={handleResendVerification}
-                  >
+                  <a className={css.resendLink} onClick={resendVerification}>
                     Resend verification email
                   </a>
                 </div>
@@ -70,11 +101,19 @@ export default function General() {
             </li>
             <li className={css.listitem}>
               <label>Company</label>
-              <input type="text" value="" className={css.input} />
+              <input
+                type="text"
+                name="company"
+                value={userSettings.company}
+                onChange={handleChange}
+                className={css.input}
+              />
             </li>
           </ul>
           <div className={css.btnWrapper}>
-            <button className={css.btn}>Save</button>
+            <button className={css.btn} onClick={handleSave}>
+              Save
+            </button>
             <button
               className={css.btnDelete}
               onClick={() => setIsModalOpen(true)}
