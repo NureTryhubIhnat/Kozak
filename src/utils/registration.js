@@ -12,7 +12,8 @@ import {
   EmailAuthProvider,
   deleteUser,
 } from 'firebase/auth';
-import { auth } from './firebase/firebaseConfig';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { auth, db } from './firebase/firebaseConfig';
 import { toast } from 'react-hot-toast';
 
 export const signUpWithEmail = async (email, password) => {
@@ -25,6 +26,25 @@ export const signUpWithEmail = async (email, password) => {
     const user = userCredential.user;
 
     await sendEmailVerification(user);
+
+    await setDoc(doc(db, 'user-settings', user.uid), {
+      bio: '',
+      birthday: null,
+      company: '',
+      country: '',
+      name: '',
+      notifications: {
+        answer: false,
+        comment: false,
+        digest: false,
+        follow: false,
+        news: false,
+        updates: false,
+      },
+      phone: null,
+      username: '',
+      website: '',
+    });
 
     toast.success(
       'SignUp successful! Please check your email to verify your account.',
@@ -169,5 +189,22 @@ export const deleteUserAccount = async (email, password) => {
     } else {
       toast.error('Error deleting user account: ' + error.message);
     }
+  }
+};
+
+export const resendVerification = async () => {
+  const user = auth.currentUser;
+
+  if (user) {
+    try {
+      await sendEmailVerification(user);
+      toast.success('Verification email sent successfully.', {
+        style: { backgroundColor: 'green' },
+      });
+    } catch (error) {
+      toast.error('Error sending verification email: ' + error.message);
+    }
+  } else {
+    toast.error('No user logged in.');
   }
 };

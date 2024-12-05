@@ -1,4 +1,4 @@
-import css from "./Info.module.css";
+import css from './Info.module.css';
 
 export default function Info() {
   return (
@@ -8,7 +8,10 @@ export default function Info() {
         <ul className={css.list}>
           <li className={css.listitem}>
             <label>Bio</label>
-            <textarea className={css.textarea} placeholder="Enter your bio here..."></textarea>
+            <textarea
+              className={css.textarea}
+              placeholder="Enter your bio here..."
+            ></textarea>
           </li>
           <li className={css.listitem}>
             <label>Birthday</label>
