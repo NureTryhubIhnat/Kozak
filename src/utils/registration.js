@@ -27,25 +27,6 @@ export const signUpWithEmail = async (email, password) => {
 
     await sendEmailVerification(user);
 
-    await setDoc(doc(db, 'user-settings', user.uid), {
-      bio: '',
-      birthday: null,
-      company: '',
-      country: '',
-      name: '',
-      notifications: {
-        answer: false,
-        comment: false,
-        digest: false,
-        follow: false,
-        news: false,
-        updates: false,
-      },
-      phone: null,
-      username: '',
-      website: '',
-    });
-
     toast.success(
       'SignUp successful! Please check your email to verify your account.',
       {
@@ -95,6 +76,19 @@ export const signUpWithGoogle = async () => {
   try {
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
+
+    await setDoc(doc(db, 'user-settings', user.uid), {
+      birthday: null,
+      name: '',
+      notifications: {
+        reminder: false,
+        updates: false,
+      },
+      height: null,
+      weight: null,
+      isAdmin: false,
+    });
+
     toast.success('Google sign-in successful:', {
       style: {
         backgroundColor: 'green',

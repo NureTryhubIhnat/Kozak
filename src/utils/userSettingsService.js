@@ -1,4 +1,4 @@
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { db, auth } from './firebase/firebaseConfig';
 
 export const fetchUserSettings = async () => {
@@ -18,7 +18,7 @@ export const fetchUserSettings = async () => {
   return snapshot.data();
 };
 
-export const saveUserSettings = async settings => {
+export const saveUserSettings = async updatedSettings => {
   const user = auth.currentUser;
 
   if (!user) {
@@ -26,5 +26,16 @@ export const saveUserSettings = async settings => {
   }
 
   const userDoc = doc(db, 'user-settings', user.uid);
-  await setDoc(userDoc, settings);
+
+  try {
+    const docSnapshot = await getDoc(userDoc);
+
+    if (docSnapshot.exists()) {
+      await updateDoc(userDoc, updatedSettings);
+    } else {
+      await setDoc(userDoc, updatedSettings);
+    }
+  } catch (error) {
+    throw new Error('Error saving user settings: ' + error.message);
+  }
 };
