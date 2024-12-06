@@ -23,7 +23,7 @@ const Navbar = () => {
     <nav className={css.navContainer}>
       <div className={css.navWrapper}>
         <a href="/">
-          <img src="images/logo.jpg" className={css.logoImg} alt="logo" />
+          <img src="/images/logo.jpg" className={css.logoImg} alt="logo" />
         </a>
         <div id="nav-mobile" className={css.navList}>
           {user ? <UserMenu /> : <AuthNav />}
