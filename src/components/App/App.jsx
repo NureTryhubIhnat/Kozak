@@ -6,6 +6,8 @@ import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
 import UserAccountPage from '../../pages/UserAccounPage/UserAccountPage';
 import General from '../Settings/General/General';
 import ChangePassword from '../Settings/ChangePassword/ChangePassword';
+import UsersAdminPage from '../../pages/UsersAdminPage/UsersAdminPage';
+import UsersList from '../Administration/Users/UsersList/UsersList';
 
 function App() {
   return (
@@ -17,6 +19,11 @@ function App() {
           <Route path="general" element={<General />} />
           <Route path="change-password" element={<ChangePassword />} />
           {/* <Route path="statistic" element={<Statistic />} /> */}
+        </Route>
+        <Route path="/users" element={<UsersAdminPage />}>
+          <Route index element={<UsersList />} />
+          <Route path="users-list" element={<UsersList />} />
+          {/* <Route path="users-statistics" element={<UsersStatistics />} /> */}
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

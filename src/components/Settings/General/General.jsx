@@ -19,6 +19,7 @@ export default function General() {
     name: '',
     height: '',
     weight: '',
+    isAdmin: false,
     notifications: {
       reminder: false,
       updates: false,
