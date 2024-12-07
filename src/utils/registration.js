@@ -77,18 +77,6 @@ export const signUpWithGoogle = async () => {
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
 
-    await setDoc(doc(db, 'user-settings', user.uid), {
-      birthday: null,
-      name: '',
-      notifications: {
-        reminder: false,
-        updates: false,
-      },
-      height: null,
-      weight: null,
-      isAdmin: false,
-    });
-
     toast.success('Google sign-in successful:', {
       style: {
         backgroundColor: 'green',
