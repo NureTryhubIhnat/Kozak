@@ -8,6 +8,8 @@ import General from '../Settings/General/General';
 import ChangePassword from '../Settings/ChangePassword/ChangePassword';
 import UsersAdminPage from '../../pages/UsersAdminPage/UsersAdminPage';
 import UsersList from '../Administration/Users/UsersList/UsersList';
+import AdminsList from '../Administration/Users/AdminsList/AdminsList';
+import UsersStatistics from '../Administration/Users/UsersStatistics/UsersStatistics';
 
 function App() {
   return (
@@ -23,7 +25,8 @@ function App() {
         <Route path="/users" element={<UsersAdminPage />}>
           <Route index element={<UsersList />} />
           <Route path="users-list" element={<UsersList />} />
-          {/* <Route path="users-statistics" element={<UsersStatistics />} /> */}
+          <Route path="admins-list" element={<AdminsList />} />
+          <Route path="users-statistics" element={<UsersStatistics />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

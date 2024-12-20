@@ -5,10 +5,10 @@ import {
   deleteUserSettings,
 } from '../../../../utils/adminPanelUsersService';
 import { toast } from 'react-hot-toast';
-import css from './UsersList.module.css';
+import css from './AdminsList.module.css';
 import { BiEditAlt } from 'react-icons/bi';
 
-export default function UsersList() {
+export default function AdminsList() {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
 
@@ -16,7 +16,7 @@ export default function UsersList() {
     const getUsers = async () => {
       try {
         const usersData = await fetchAllUserSettings();
-        const filteredUsers = usersData.filter(user => !user.isAdmin);
+        const filteredUsers = usersData.filter(user => user.isAdmin);
         setUsers(filteredUsers);
       } catch (err) {
         setError('Failed to fetch user settings');
@@ -123,32 +123,7 @@ export default function UsersList() {
                   <BiEditAlt />
                 </button>
               </div>
-              <div className={css.inputWrapper}>
-                <label className={css.label}>
-                  Height:
-                  <input
-                    value={user.height}
-                    onChange={e => handleInputChange(e, user.id, 'height')}
-                    className={css.input}
-                  />
-                </label>
-                <button className={css.btn} onClick={() => handleSave(user.id)}>
-                  <BiEditAlt />
-                </button>
-              </div>
-              <div className={css.inputWrapper}>
-                <label className={css.label}>
-                  Weight:
-                  <input
-                    value={user.weight}
-                    onChange={e => handleInputChange(e, user.id, 'weight')}
-                    className={css.input}
-                  />
-                </label>
-                <button className={css.btn} onClick={() => handleSave(user.id)}>
-                  <BiEditAlt />
-                </button>
-              </div>
+
               <div className={css.isAdminInputWrapper}>
                 <label className={css.isAdminLabel}>
                   Admin:

@@ -1,0 +1,35 @@
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  margin-top: 50px;
+}
+
+.userCount {
+  margin-top: 50px;
+  padding: 60px;
+}
+
+.counterContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 70px;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.title {
+  text-align: center;
+}
+
+.text {
+  font-size: 25px;
+}
+
+.counter {
+  font-size: 70px;
+  font-weight: bold;
+  color: #fdce70;
+}
